@@ -1,0 +1,41 @@
+
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Invoice - Website</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 40px; }
+          .invoice-box { max-width: 800px; margin: auto; padding: 30px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0,0,0,0.15); }
+          .header { display: flex; justify-content: space-between; }
+          .company-details, .client-details { margin-bottom: 20px; }
+          table { width: 100%; border-collapse: collapse; }
+          table td, table th { border: 1px solid #ddd; padding: 8px; }
+          table th { background-color: #f2f2f2; }
+          .total { text-align: right; margin-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <div class="invoice-box">
+          <div class="header">
+            <h2>INVOICE</h2>
+            <div>Date: 3/19/2026</div>
+          </div>
+          <div class="company-details">
+            <h3>Your Company Name</h3>
+            <p>Your Address<br>Your Email<br>Your Phone</p>
+          </div>
+          <div class="client-details">
+            <h3>Bill To:</h3>
+            <p>Client 1<br>client@freelancecrm.com<br>XYZ.COM</p>
+          </div>
+          <table>
+            <tr><th>Description</th><th>Amount</th></tr>
+            <tr><td>Website - Project</td><td>$250</td></tr>
+          </table>
+          <div class="total">
+            <strong>Total: $250</strong>
+          </div>
+        </div>
+      </body>
+      </html>
+    

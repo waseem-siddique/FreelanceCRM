@@ -1,0 +1,15 @@
+{
+  "_id": "69bec43cb30c16119b3f4b91",
+  "title": "Website Redesign",
+  "description": "Need to redesign their company's website.",
+  "status": "In Progress",
+  "deadline": "2023-04-20T00:00:00.000Z",
+  "budget": 25000,
+  "progress": 32,
+  "client": "69bec3beb30c16119b3f4b6f",
+  "user": "69bebeefbb9189590c071197",
+  "tasks": [],
+  "createdAt": "2026-03-21T16:15:56.265Z",
+  "updatedAt": "2026-03-21T16:28:54.306Z",
+  "__v": 0
+}
