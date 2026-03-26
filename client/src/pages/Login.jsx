@@ -210,7 +210,8 @@ const Login = () => {
                 Verification
               </motion.h2>
               <p className="mt-2 text-center text-sm text-gray-200">
-                Enter the 6-digit code sent to {formData.email}
+                Enter the 6-digit code sent to {formData.email} <br />
+                <span className="text-primary-300 font-semibold border border-primary-300/30 bg-primary-900/20 px-2 py-1 rounded inline-block mt-2">Demo OTP: 123456</span>
               </p>
               <form className="mt-8 space-y-6" onSubmit={handleVerifyOtp}>
                 <div>
@@ -318,7 +319,8 @@ const Login = () => {
                 Create New Password
               </motion.h2>
               <p className="mt-2 text-center text-sm text-gray-200">
-                Enter the 6-digit code and your new password
+                Enter the 6-digit code and your new password <br />
+                <span className="text-primary-300 font-semibold border border-primary-300/30 bg-primary-900/20 px-2 py-1 rounded inline-block mt-2">Demo OTP: 123456</span>
               </p>
               <form className="mt-8 space-y-6" onSubmit={handleResetPassword}>
                 <div className="space-y-4">
