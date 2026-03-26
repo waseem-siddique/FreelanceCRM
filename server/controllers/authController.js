@@ -221,5 +221,65 @@ const resendOtp = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+// Forgot Password
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-module.exports = { register, login, getProfile, updateProfile, verifyRegistrationOtp, verifyLoginOtp, resendOtp };
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.otp = otp;
+    user.otpExpires = Date.now() + 10 * 60 * 1000;
+    await user.save();
+
+    const subject = 'FreelanceCRM - Password Reset Verification Code';
+    const message = `You requested a password reset. Your verification code is: ${otp}\nThis code will expire in 10 minutes.`;
+
+    try {
+      await sendEmail({ email: user.email, subject, message });
+    } catch (e) {
+      console.error('Email failed:', e);
+      return res.status(500).json({ message: 'Failed to send reset email. Please try again later.' });
+    }
+
+    res.json({ message: 'Password reset OTP sent to email', requiresOtp: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Reset Password
+const resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (user.otp !== otp || user.otpExpires < Date.now()) {
+      return res.status(400).json({ message: 'Invalid or expired OTP' });
+    }
+
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!strongPasswordRegex.test(newPassword)) {
+      return res.status(400).json({ 
+        message: 'Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character.' 
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    
+    // Clear OTP
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    
+    await user.save();
+
+    res.json({ message: 'Password has been successfully reset' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { register, login, getProfile, updateProfile, verifyRegistrationOtp, verifyLoginOtp, resendOtp, forgotPassword, resetPassword };
