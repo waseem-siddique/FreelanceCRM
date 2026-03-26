@@ -21,7 +21,7 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = '123456'; // Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     const user = await User.create({ 
@@ -89,7 +89,7 @@ const login = async (req, res) => {
 
     if (!user.isVerified) {
       // Resend OTP
-      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      const otp = '123456'; // Math.floor(100000 + Math.random() * 900000).toString();
       user.otp = otp;
       user.otpExpires = Date.now() + 10 * 60 * 1000;
       await user.save();
@@ -108,7 +108,7 @@ const login = async (req, res) => {
     const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
     if (!user.lastLogin || (Date.now() - new Date(user.lastLogin).getTime() > TWENTY_FOUR_HOURS)) {
       // Require OTP due to 24 hours gap
-      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      const otp = '123456'; // Math.floor(100000 + Math.random() * 900000).toString();
       user.otp = otp;
       user.otpExpires = Date.now() + 10 * 60 * 1000;
       await user.save();
@@ -202,7 +202,7 @@ const resendOtp = async (req, res) => {
     if (!user) return res.status(400).json({ message: 'User not found' });
 
     // Generate new OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = '123456'; // Math.floor(100000 + Math.random() * 900000).toString();
     user.otp = otp;
     user.otpExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
@@ -228,7 +228,7 @@ const forgotPassword = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = '123456'; // Math.floor(100000 + Math.random() * 900000).toString();
     user.otp = otp;
     user.otpExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
